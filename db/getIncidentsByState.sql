@@ -8,4 +8,4 @@ from incidents
 join injuries on incidents.injuryid = injuries.id
 join affectedareas on injuries.affectedareaid = affectedareas.id
 join causes on incidents.causeid = causes.id
-where state = 'CA'
+where state = $1;

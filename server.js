@@ -21,7 +21,7 @@ app.get('/incidents', (req, res) => {
   const state = req.query.state;
   console.log(state);
   if (state) {
-    db.getIncidentsByState().then(incidents => {
+    db.getIncidentsByState([state]).then(incidents => {
       res.send(incidents);
     });
   }
@@ -33,7 +33,15 @@ app.get('/incidents', (req, res) => {
 });
 
 app.post('/incidents', (req, res) => {
-  res.send({id: 123});
+  const incident = req.body;
+  const db = req.app.get('db');
+  db.createIncident([
+    incident.state,
+    incident.injuryId,
+    incident.causeId
+  ]).then(result => {
+    res.send(result);
+  });
 });
 
 massive(connectionString).then(db => {
